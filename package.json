@@ -1,0 +1,29 @@
+{
+	"name": "spring-board-element",
+	"type": "module",
+	"version": "0.0.0",
+	"files": [
+		"dist"
+	],
+	"main": "dist/spring-board-element.umd.js",
+	"module": "dist/spring-board-element.es.js",
+	"exports": {
+		".": {
+			"import": "./dist/spring-board-element.es.js",
+			"require": "./dist/spring-board-element.umd.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc && vite build",
+		"dev": "vite",
+		"preview": "vite preview --port 3000"
+	},
+	"devDependencies": {
+		"@noble/ed25519": "^1.6.0",
+		"@rdm/prettier-config": "^3.0.0",
+		"prettier": "^2.7.1",
+		"typescript": "^4.5.4",
+		"vite": "^2.9.13"
+	},
+	"prettier": "@rdm/prettier-config"
+}
