@@ -24,15 +24,20 @@ However, a simple `<script>` tag will also work! A UMD build is available via [u
 
 ```html
 <head>
-  <!-- Import the element -->
-  <script type="module" src="https://unpkg.com/spring-board-element"></script>
-  <!-- ... the rest of your <head> -->
+	<!-- Import the element -->
+	<script type="module" src="https://unpkg.com/spring-board-element"></script>
+	<!-- ... the rest of your <head> -->
 </head>
 <body>
-  <spring-board href="https://bogbody.biz/..."></spring-board>
+	<spring-board href="https://bogbody.biz/..."></spring-board>
 </body>
 ```
 
+## Attributes
+
+The `<spring-board>` element has one required attribute:
+
+- `href`: The URL of the board to embed. An error will be thrown if this is not provided.
 
 ## LICENSE
 
