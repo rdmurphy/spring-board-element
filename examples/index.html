@@ -23,6 +23,13 @@
 				import('https://esm.sh/spring-board-element@latest');
 			}
 		</script>
+		<script type="module">
+			// added as a check to make sure property updating works correctly
+			// https://web.dev/custom-elements-best-practices/#make-properties-lazy
+			const board = document.createElement('spring-board');
+			board.href = 'https://bogbody.biz/ab589f4dde9fce4180fcf42c7b05185b0a02a5d682e353fa39177995083e0583';
+			document.body.appendChild(board);
+		</script>
 	</head>
 	<body>
 		<spring-board href="https://bogbody.biz/ac83c5127baf539b2132f032ed188c86d849c0023d2e7368ec1b5034383e0323"></spring-board>
@@ -34,9 +41,6 @@
 		></spring-board>
 		<spring-board
 			href="https://0l0.lol/64e74d96f7ae11153181c1398b653b918a7cf545e334a5f46c5df0d4583e0423"
-		></spring-board>
-		<spring-board
-			href="https://bogbody.biz/ab589f4dde9fce4180fcf42c7b05185b0a02a5d682e353fa39177995083e0583"
 		></spring-board>
 	</body>
 </html>
