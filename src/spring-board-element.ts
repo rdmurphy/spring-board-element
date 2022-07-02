@@ -7,6 +7,8 @@ const DEFAULT_BOARD_CSS =
 
 /**
  * Ensures that all links within a board open in a new tab.
+ *
+ * @private
  * @param event
  */
 function openLinksInNewTabs(event: MouseEvent) {
@@ -15,6 +17,22 @@ function openLinksInNewTabs(event: MouseEvent) {
 	if (target.matches('a')) {
 		target.setAttribute('target', '_blank');
 		target.setAttribute('rel', 'noopener');
+	}
+}
+
+/**
+ * Makes properties lazy. Enables board creation via document.createElement.
+ * https://web.dev/custom-elements-best-practices/#make-properties-lazy
+ *
+ * @private
+ * @param object
+ * @param property
+ */
+function upgradeProperty(object: any, property: string) {
+	if (object.hasOwnProperty(property)) {
+		let value = object[property];
+		delete object[property];
+		object[property] = value;
 	}
 }
 
@@ -43,14 +61,15 @@ class SpringBoardElement extends HTMLElement {
 		return url.pathname.replace('/', '').toLowerCase().trim();
 	}
 
-	connectedCallback() {
-		if (!this.shadowRoot) {
-			this.attachShadow({ mode: 'open' });
-		}
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
 
+	connectedCallback() {
 		/** @ts-ignore */
 		this.shadowRoot.addEventListener('click', openLinksInNewTabs);
-		this.fetch(this.request());
+		upgradeProperty(this, 'href');
 	}
 
 	disconnectedCallback() {
@@ -58,20 +77,14 @@ class SpringBoardElement extends HTMLElement {
 		this.shadowRoot.removeEventListener('click', openLinksInNewTabs);
 	}
 
-	attributeChangedCallback(name: string) {
-		if (name === 'href') {
+	attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+		if (name === 'href' && oldValue !== newValue) {
 			this.fetch(this.request());
 		}
 	}
 
 	request(): Request {
-		const href = this.href;
-
-		if (!href) {
-			throw new Error('Missing board href');
-		}
-
-		return new Request(href, {
+		return new Request(this.href, {
 			method: 'GET',
 			mode: 'cors',
 			headers: {

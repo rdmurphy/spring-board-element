@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' https://esm.sh; form-action *; connect-src *;"
+		/>
+		<title>spring-board-element</title>
+		<style>
+      body {
+        margin: 0 auto;
+        max-width: 600px;
+      }
+			spring-board {
+				--board-background-color: mintcream;
+				display: block;
+			}
+		</style>
+		<script type="module">
+			// only for local development via Vite
+			if (location.hostname === 'localhost') {
+				import('/src/spring-board-element.ts');
+			} else {
+				import('https://esm.sh/spring-board-element@latest');
+			}
+		</script>
+		<script type="module">
+      const board = document.querySelector('spring-board');
+			const select = document.querySelector('select');
+
+      select.addEventListener('change', (event) => {
+        const url = event.target.value;
+        board.href = url;
+      });
+		</script>
+	</head>
+	<body>
+		<select>
+      <option value="">--</option>
+			<option
+				value="https://bogbody.biz/ac83c5127baf539b2132f032ed188c86d849c0023d2e7368ec1b5034383e0323"
+			>
+				ac83c5127baf539b2132f032ed188c86d849c0023d2e7368ec1b5034383e0323
+			</option>
+			<option
+				value="https://bogbody.biz/1e4bed50500036e8e2baef40cb14019c2d49da6dfee37ff146e45e5c783e0123"
+			>
+				1e4bed50500036e8e2baef40cb14019c2d49da6dfee37ff146e45e5c783e0123
+			</option>
+			<option
+				value="https://bogbody.biz/ca93846ae61903a862d44727c16fed4b80c0522cab5e5b8b54763068b83e0623"
+			>
+				ca93846ae61903a862d44727c16fed4b80c0522cab5e5b8b54763068b83e0623
+			</option>
+			<option
+				value="https://0l0.lol/64e74d96f7ae11153181c1398b653b918a7cf545e334a5f46c5df0d4583e0423"
+			>
+				64e74d96f7ae11153181c1398b653b918a7cf545e334a5f46c5df0d4583e0423
+			</option>
+			<option
+				value="https://bogbody.biz/ab589f4dde9fce4180fcf42c7b05185b0a02a5d682e353fa39177995083e0583"
+			>
+				ab589f4dde9fce4180fcf42c7b05185b0a02a5d682e353fa39177995083e0583
+			</option>
+		</select>
+		<spring-board> Nothing here yet! </spring-board>
+	</body>
+</html>
