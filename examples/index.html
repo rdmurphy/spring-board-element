@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="default-src 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; form-action *; connect-src *;"
+			content="default-src 'none'; font-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' https://esm.sh; form-action *; connect-src *;"
 		/>
 		<title>spring-board-element</title>
 		<style>
@@ -15,9 +15,17 @@
 				display: block;
 			}
 		</style>
-		<script type="module" src="/src/spring-board-element.ts"></script>
+		<script type="module">
+			// only for local development via Vite
+			if (location.hostname === 'localhost') {
+				import('/src/spring-board-element.ts');
+			} else {
+				import('https://esm.sh/spring-board-element@latest');
+			}
+		</script>
 	</head>
 	<body>
+		<spring-board href="https://bogbody.biz/ac83c5127baf539b2132f032ed188c86d849c0023d2e7368ec1b5034383e0323"></spring-board>
 		<spring-board
 			href="https://bogbody.biz/1e4bed50500036e8e2baef40cb14019c2d49da6dfee37ff146e45e5c783e0123"
 		></spring-board>
