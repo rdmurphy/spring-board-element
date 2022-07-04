@@ -35,9 +35,9 @@ However, a simple `<script>` tag will also work! A UMD build is available via [u
 
 ## Attributes
 
-The `<spring-board>` element has one required attribute:
+The `<spring-board>` element has one optional attribute:
 
-- `href`: The URL of the board to embed. An error will be thrown if this is not provided.
+- `href`: The URL of the board to embed.
 
 ## LICENSE
 
