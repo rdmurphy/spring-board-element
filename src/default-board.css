@@ -1,0 +1,26 @@
+/*
+Not used/imported anywhere in the project - just here for reference.
+
+To make an update to the default board CSS - edit this file, copy-paste it
+into the cssnano playground (https://cssnano.co/playground/) to create a
+minified version, then replace what's present in the DEFAULT_BOARD_CSS variable
+in the project's spring-board-element.ts file. Don't forget to commit both files!
+*/
+
+:host {
+	background-color: var(--board-background-color);
+	box-sizing: border-box;
+  display: block;
+	padding: 2rem;
+}
+time {
+	display: none;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin: 0 0 2rem 0;
+}

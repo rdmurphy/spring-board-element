@@ -3,7 +3,7 @@ import { verify } from '@noble/ed25519';
 
 const encoder = new TextEncoder();
 const DEFAULT_BOARD_CSS =
-	'<style>:host{background-color:var(--board-background-color);box-sizing:border-box;padding:2rem}time{display:none}p,h1,h2,h3,h4,h5{margin:0 0 2rem}</style>';
+	':host{background-color:var(--board-background-color);box-sizing:border-box;display:block;padding:2rem}time{display:none}h1,h2,h3,h4,h5,p{margin:0 0 2rem}';
 
 /**
  * Ensures that all links within a board open in a new tab.
@@ -102,7 +102,7 @@ class SpringBoardElement extends HTMLElement {
 		const verified = await verify(signature, encoder.encode(body), this.key);
 
 		if (verified) {
-			this.shadowRoot!.innerHTML = DEFAULT_BOARD_CSS + body;
+			this.shadowRoot!.innerHTML = `<style>${DEFAULT_BOARD_CSS}</style>` + body;
 		}
 		// TODO: throw an error when invalid? maybe a custom event?
 	}
