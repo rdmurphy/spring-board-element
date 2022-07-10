@@ -36,7 +36,7 @@ async function run() {
 								'Access-Control-Expose-Headers',
 								'Content-Type, Last-Modified, Spring-Signature, Spring-Version',
 							);
-							return response.end(boardHTML);
+							response.end(boardHTML);
 						} else {
 							next();
 						}
