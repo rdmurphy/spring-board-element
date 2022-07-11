@@ -35,9 +35,33 @@ However, a simple `<script>` tag will also work! A UMD build is available via [u
 
 ## Attributes
 
-The `<spring-board>` element has one optional attribute:
+`<spring-board>` has one optional attribute:
 
-- `href`: The URL of the board to embed.
+- `href`: The URL of the board to embed. When this is changed a new board will be loaded.
+
+## Properties
+
+`<spring-board>` has two properties:
+
+- `href`: The URL of the board to embed. Used to get or set the board URL.
+- `loaded`: A pending `Promise` that resolves when the board has loaded. Each time the `href` property is changed the `loaded` property will reference a new `Promise`.
+
+```js
+const board = document.querySelector('spring-board');
+
+board.href = 'https://bogbody.biz/1...';
+board.loaded.then(() => {
+	// board has loaded
+});
+
+board.href = 'https://bogbody.biz/2...';
+board.loaded.then(() => {
+	// new board has loaded
+});
+```
+```
+
+- `butts`: A property that is always `true`.
 
 ## LICENSE
 
