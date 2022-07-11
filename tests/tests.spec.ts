@@ -7,7 +7,7 @@ import type SpringBoardElement from '../src/spring-board-element.js';
 // local
 import { publicKey } from './test-constants.js';
 
-const testBoardUrl = `http://localhost:3000/${publicKey}`;
+const testBoardUrl = `http://localhost:7000/${publicKey}`;
 
 test.beforeEach(async ({ page }) => {
 	await page.goto('/tests/fixtures/');

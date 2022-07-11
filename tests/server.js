@@ -5,20 +5,26 @@ import { createServer } from 'vite';
 // local
 import { generateBoardHTML, privateKey, publicKey } from './test-constants.js';
 
+const BASE_URL = 'http://localhost';
+
 async function run() {
 	const server = await createServer({
 		plugins: [
 			{
 				name: 'vite-micro-spring-server',
-				async configureServer(server) {
-					const boardHTML = generateBoardHTML();
-					const signatureBytes = await sign(boardHTML, privateKey);
-					const signatureHex = Buffer.from(signatureBytes).toString('hex');
-					server.middlewares.use((request, response, next) => {
-						if (request.url === '/') {
+				configureServer(server) {
+					server.middlewares.use(async (request, response, next) => {
+						const url = new URL(request.url, BASE_URL);
+
+						if (url.pathname === '/') {
 							response.statusCode = 200;
 							response.end('OK');
-						} else if (request.url === `/${publicKey}`) {
+						} else if (url.pathname === `/${publicKey}`) {
+							const boardHTML = generateBoardHTML({
+								nested: url.searchParams.has('nested'),
+							});
+							const signatureBytes = await sign(boardHTML, privateKey);
+							const signatureHex = Buffer.from(signatureBytes).toString('hex');
 							response.statusCode = 200;
 							response.setHeader('Content-Type', 'text/html');
 							response.setHeader('Spring-Verson', '83');
