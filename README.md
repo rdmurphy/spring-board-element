@@ -59,9 +59,6 @@ board.loaded.then(() => {
 	// new board has loaded
 });
 ```
-```
-
-- `butts`: A property that is always `true`.
 
 ## LICENSE
 
