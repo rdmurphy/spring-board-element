@@ -1,5 +1,5 @@
 // packages
-import { test, expect } from '@playwright/test';
+import { expect, type Locator, test } from '@playwright/test';
 
 // types
 import type SpringBoardElement from '../src/spring-board-element.js';
@@ -7,7 +7,7 @@ import type SpringBoardElement from '../src/spring-board-element.js';
 // local
 import { publicKey } from './test-constants.js';
 
-const testBoardUrl = `http://localhost:3000/${publicKey}`;
+const testBoardUrl = `http://localhost:7000/${publicKey}`;
 
 test.beforeEach(async ({ page }) => {
 	await page.goto('/tests/fixtures/');
@@ -38,11 +38,7 @@ test.describe('element creation', () => {
 test.describe('after tree insertion', () => {
 	test('can assign an href', async ({ page }) => {
 		const locator = page.locator('spring-board');
-		await locator.evaluate(
-			(element: SpringBoardElement, testBoardUrl) =>
-				(element.href = testBoardUrl),
-			testBoardUrl,
-		);
+		await loadBoardInElement(locator);
 
 		expect(
 			await locator.evaluate((element: SpringBoardElement) => element.href),
@@ -51,14 +47,30 @@ test.describe('after tree insertion', () => {
 
 	test('can retreive the key', async ({ page }) => {
 		const locator = page.locator('spring-board');
-		await locator.evaluate(
-			(element: SpringBoardElement, testBoardUrl) =>
-				(element.href = testBoardUrl),
-			testBoardUrl,
-		);
+		await loadBoardInElement(locator);
 
 		expect(
 			await locator.evaluate((element: SpringBoardElement) => element.key),
 		).toBe(publicKey);
 	});
+
+	test('assert board contents', async ({ page }) => {
+		const locator = page.locator('spring-board');
+		const innerLocator = locator.locator('#number');
+
+		await loadBoardInElement(locator);
+
+		expect(await innerLocator.textContent()).toBe('83');
+	});
 });
+
+function loadBoardInElement(locator: Locator) {
+	return Promise.all([
+		locator.evaluate(
+			(element: SpringBoardElement, testBoardUrl) =>
+				(element.href = testBoardUrl),
+			testBoardUrl,
+		),
+		locator.evaluate((element: SpringBoardElement) => element.loaded),
+	]);
+}
