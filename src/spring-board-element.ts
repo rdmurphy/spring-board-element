@@ -7,7 +7,7 @@ import { Deferred, openLinksInNewTabs, upgradeProperty } from './utils.js';
 const encoder = new TextEncoder();
 const boardCSS = document.createElement('template');
 boardCSS.innerHTML =
-	':host{background-color:var(--board-background-color);box-sizing:border-box;display:block;padding:2rem}time{display:none}h1,h2,h3,h4,h5,p{margin:0 0 2rem}';
+	'<style>:host{background-color:var(--board-background-color);box-sizing:border-box;display:block;padding:2rem}time{display:none}h1,h2,h3,h4,h5,p{margin:0 0 2rem}</style>';
 
 class SpringBoardElement extends HTMLElement {
 	#loaded = new Deferred<boolean>();
