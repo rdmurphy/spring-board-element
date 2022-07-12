@@ -54,6 +54,25 @@ test.describe('after tree insertion', () => {
 		).toBe(publicKey);
 	});
 
+	test('can retrieve pubdate with getter', async ({ page }) => {
+		const locator = page.locator('spring-board');
+		await loadBoardInElement(locator);
+
+		expect(
+			await locator.evaluate((element: SpringBoardElement) =>
+				element.pubdate?.toISOString(),
+			),
+		).toBe(await locator.locator('time').getAttribute('datetime'));
+	});
+
+	test('pubdate getter returns null in empty board', async ({ page }) => {
+		const locator = page.locator('spring-board');
+
+		expect(
+			await locator.evaluate((element: SpringBoardElement) => element.pubdate),
+		).toBeNull();
+	});
+
 	test('assert board contents', async ({ page }) => {
 		const locator = page.locator('spring-board');
 		const innerLocator = locator.locator('#number');
