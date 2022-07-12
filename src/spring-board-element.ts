@@ -40,6 +40,20 @@ class SpringBoardElement extends HTMLElement {
 		return this.#loaded.promise;
 	}
 
+	get pubdate() {
+		const time = this.shadowRoot?.querySelector('time');
+
+		if (time) {
+			const datetime = time.getAttribute('datetime');
+
+			if (datetime) {
+				return new Date(datetime);
+			}
+		}
+
+		return null;
+	}
+
 	constructor() {
 		super();
 

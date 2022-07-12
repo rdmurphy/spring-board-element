@@ -41,10 +41,11 @@ However, a simple `<script>` tag will also work! A UMD build is available via [u
 
 ## Properties
 
-`<spring-board>` has two properties:
+`<spring-board>` has three properties:
 
 - `href`: The URL of the board to embed. Used to get or set the board URL.
 - `loaded`: A pending `Promise` that resolves when the board has loaded. Each time the `href` property is changed the `loaded` property will reference a new `Promise`.
+- `pubdate`: A `Date` object representing the date and time the board was published. This is retrieved from the board's `<time>` element. Returns `null` if the board has not been loaded.
 
 ```js
 const board = document.querySelector('spring-board');
