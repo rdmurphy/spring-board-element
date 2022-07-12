@@ -5,7 +5,8 @@ import { verify } from '@noble/ed25519';
 import { Deferred, openLinksInNewTabs, upgradeProperty } from './utils.js';
 
 const encoder = new TextEncoder();
-const DEFAULT_BOARD_CSS =
+const boardCSS = document.createElement('template');
+boardCSS.innerHTML =
 	':host{background-color:var(--board-background-color);box-sizing:border-box;display:block;padding:2rem}time{display:none}h1,h2,h3,h4,h5,p{margin:0 0 2rem}';
 
 class SpringBoardElement extends HTMLElement {
@@ -41,7 +42,9 @@ class SpringBoardElement extends HTMLElement {
 
 	constructor() {
 		super();
-		this.attachShadow({ mode: 'open' });
+
+		const shadowRoot = this.attachShadow({ mode: 'open' });
+		shadowRoot.appendChild(boardCSS.content.cloneNode(true));
 	}
 
 	connectedCallback() {
@@ -81,7 +84,11 @@ class SpringBoardElement extends HTMLElement {
 		const verified = await verify(signature, encoder.encode(body), this.key);
 
 		if (verified) {
-			this.shadowRoot!.innerHTML = `<style>${DEFAULT_BOARD_CSS}</style>` + body;
+			const template = document.createElement('template');
+			template.innerHTML = body;
+			const content = template.content.cloneNode(true);
+
+			this.shadowRoot!.appendChild(content);
 			this.#loaded.resolve(true);
 		}
 		// TODO: throw an error when invalid? maybe a custom event?
