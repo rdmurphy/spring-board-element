@@ -1,16 +1,15 @@
 /*
-Not used/imported anywhere in the project - just here for reference.
+This is imported into spring-board-element.ts and used to build the template 
+for the default board styles.
 
-To make an update to the default board CSS - edit this file, copy-paste it
-into the cssnano playground (https://cssnano.co/playground/) to create a
-minified version, then replace what's present in the DEFAULT_BOARD_CSS variable
-in the project's spring-board-element.ts file. Don't forget to commit both files!
+Based on the Spring '83 spec's default style expectations:
+https://github.com/robinsloan/spring-83/blob/main/draft-20220629.md#boards-in-the-client
 */
 
 :host {
 	background-color: var(--board-background-color);
 	box-sizing: border-box;
-  display: block;
+	display: block;
 	padding: 2rem;
 }
 time {

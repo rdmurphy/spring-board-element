@@ -4,10 +4,13 @@ import { verify } from '@noble/ed25519';
 // local
 import { Deferred, openLinksInNewTabs, upgradeProperty } from './utils.js';
 
+// styles
+import css from './default-board.css?inline';
+
+const cssTemplate = document.createElement('template');
+cssTemplate.innerHTML = `<style>${css}</style>`;
+
 const encoder = new TextEncoder();
-const boardCSS = document.createElement('template');
-boardCSS.innerHTML =
-	'<style>:host{background-color:var(--board-background-color);box-sizing:border-box;display:block;padding:2rem}time{display:none}h1,h2,h3,h4,h5,p{margin:0 0 2rem}</style>';
 
 class SpringBoardElement extends HTMLElement {
 	#loaded = new Deferred<boolean>();
@@ -58,7 +61,7 @@ class SpringBoardElement extends HTMLElement {
 		super();
 
 		const shadowRoot = this.attachShadow({ mode: 'open' });
-		shadowRoot.appendChild(boardCSS.content.cloneNode(true));
+		shadowRoot.appendChild(cssTemplate.content.cloneNode(true));
 	}
 
 	connectedCallback() {
