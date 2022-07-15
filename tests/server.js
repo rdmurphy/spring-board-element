@@ -5,6 +5,8 @@ import { createServer } from 'vite';
 // local
 import { generateBoardHTML, privateKey, publicKey } from './test-constants.js';
 
+const BASE_URL = 'http://localhost';
+
 async function run() {
 	const server = await createServer({
 		plugins: [
@@ -15,10 +17,11 @@ async function run() {
 					const signatureBytes = await sign(boardHTML, privateKey);
 					const signatureHex = Buffer.from(signatureBytes).toString('hex');
 					server.middlewares.use((request, response, next) => {
-						if (request.url === '/') {
+						const url = new URL(request.url, BASE_URL);
+						if (url.pathname === '/') {
 							response.statusCode = 200;
 							response.end('OK');
-						} else if (request.url === `/${publicKey}`) {
+						} else if (url.pathname === `/${publicKey}`) {
 							response.statusCode = 200;
 							response.setHeader('Content-Type', 'text/html');
 							response.setHeader('Spring-Verson', '83');
