@@ -81,14 +81,26 @@ test.describe('after tree insertion', () => {
 
 		expect(await innerLocator.textContent()).toBe('83');
 	});
+
+	test('shadow DOM should be purged before loading a new board', async ({
+		page,
+	}) => {
+		const locator = page.locator('spring-board');
+		const timeLocator = locator.locator('time');
+
+		await loadBoardInElement(locator);
+		expect(await timeLocator.count()).toBe(1);
+
+		await loadBoardInElement(locator, `${testBoardUrl}?again`);
+		expect(await timeLocator.count()).toBe(1);
+	});
 });
 
-function loadBoardInElement(locator: Locator) {
+function loadBoardInElement(locator: Locator, href = testBoardUrl) {
 	return Promise.all([
 		locator.evaluate(
-			(element: SpringBoardElement, testBoardUrl) =>
-				(element.href = testBoardUrl),
-			testBoardUrl,
+			(element: SpringBoardElement, href) => (element.href = href),
+			href,
 		),
 		locator.evaluate((element: SpringBoardElement) => element.loaded),
 	]);
