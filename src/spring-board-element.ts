@@ -60,8 +60,7 @@ class SpringBoardElement extends HTMLElement {
 	constructor() {
 		super();
 
-		const shadowRoot = this.attachShadow({ mode: 'open' });
-		shadowRoot.appendChild(cssTemplate.content.cloneNode(true));
+		this.attachShadow({ mode: 'open' });
 	}
 
 	connectedCallback() {
@@ -105,7 +104,10 @@ class SpringBoardElement extends HTMLElement {
 			template.innerHTML = body;
 			const content = template.content.cloneNode(true);
 
-			this.shadowRoot!.appendChild(content);
+			const shadowRoot = this.shadowRoot!;
+			shadowRoot.textContent = '';
+			shadowRoot.append(cssTemplate.content.cloneNode(true), content);
+
 			this.#loaded.resolve(true);
 		}
 		// TODO: throw an error when invalid? maybe a custom event?
